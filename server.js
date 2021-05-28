@@ -1,7 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const Shorturl = require('./models/shorturls')
-
+const port = process.env.PORT || 5000;
 const app = express()
 let dburl  = "mongodb+srv://sairam:sairamvirat@cluster0.qxjo5.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
 
@@ -11,7 +11,7 @@ mongoose.connect(dburl,{
 
 app.set('view engine', 'ejs')
 app.use(express.urlencoded({extended: false}))
-
+ 
 app.get('/', async (req,res)=> {
     const shorturls = await Shorturl.find()
     res.render('index',{shorturls:shorturls})
@@ -35,4 +35,4 @@ app.get('/:shorturl', async (req,res)=> {
 })
 
 
-app.listen(process.env.PORT || 5000)
+app.listen(port, () => console.log('Server started'))
